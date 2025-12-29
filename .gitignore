@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+client/node_modules/
+
+# Environment variables
+.env
+
+# SQLite database
+health_wallet.db
+server/health_wallet.db
+
+# Uploads (user files)
+uploads/
+server/uploads/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output
+client/build/
