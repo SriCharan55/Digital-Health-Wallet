@@ -37,19 +37,19 @@ db.serialize(() => {
     )
   `);
 
-//    db.run(
-//   "ALTER TABLE reports ADD COLUMN associated_vital TEXT",
-//   (err) => {
-//     if (err) {
-//       // SQLite already has the column → ignore safely
-//       if (!err.message.includes("duplicate column name")) {
-//         console.error("❌ ALTER TABLE error:", err.message);
-//       }
-//     } else {
-//       console.log("✅ associated_vital column added");
-//     }
-//   }
-// );
+   db.run(
+  "ALTER TABLE reports ADD COLUMN associated_vital TEXT",
+  (err) => {
+    if (err) {
+      // SQLite already has the column → ignore safely
+      if (!err.message.includes("duplicate column name")) {
+        console.error("❌ ALTER TABLE error:", err.message);
+      }
+    } else {
+      console.log("✅ associated_vital column added");
+    }
+  }
+);
 
 
   // Vitals table
