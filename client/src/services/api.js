@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: "https://task-manager-3r80.onrender.com",
 });
 
 api.interceptors.request.use((req) => {
@@ -13,3 +13,4 @@ api.interceptors.request.use((req) => {
 });
 
 export default api;
+
