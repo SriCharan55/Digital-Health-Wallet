@@ -1,13 +1,18 @@
 const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
+
+// ✅ Always create DB in a fixed location
+const dbPath = path.join(__dirname, "health_wallet.db");
 
 // Connect to SQLite database
-const db = new sqlite3.Database("./health_wallet.db", (err) => {
+const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error("❌ Error connecting to SQLite:", err);
   } else {
-    console.log("✅ Connected to SQLite database");
+    console.log("✅ Connected to SQLite database at", dbPath);
   }
 });
+
 
 // Create tables
 db.serialize(() => {

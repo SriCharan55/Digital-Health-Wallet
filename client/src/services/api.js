@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://task-manager-3r80.onrender.com",
+  baseURL: "https://digital-health-wallet-0rxq.onrender.com/api",
 });
 
 api.interceptors.request.use((req) => {
