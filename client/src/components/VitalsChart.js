@@ -68,15 +68,31 @@ export default function VitalsChart({ vitalType, title, refreshKey }) {
         <ResponsiveContainer width="100%" height="100%">
           {/* BP → Bar Chart */}
           {vitalType === "BP" && (
-            <BarChart data={data} barGap={8} barCategoryGap={20}>
+            <BarChart
+              data={data}
+              barGap={4}
+              barCategoryGap={40}
+              maxBarSize={20}
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis domain={[0, 150]} />
               <Tooltip />
-              <Bar dataKey="systolic" fill="#ef4444" name="Systolic" />
-              <Bar dataKey="diastolic" fill="#3b82f6" name="Diastolic" />
+              <Bar
+                dataKey="systolic"
+                fill="#ef4444"
+                barSize={18}
+                name="Systolic"
+              />
+              <Bar
+                dataKey="diastolic"
+                fill="#3b82f6"
+                barSize={18}
+                name="Diastolic"
+              />
             </BarChart>
           )}
+
 
           {/* Sugar → Line Chart */}
           {vitalType === "Sugar" && (
