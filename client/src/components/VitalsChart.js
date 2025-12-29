@@ -18,21 +18,38 @@ export default function VitalsChart({ vitalType, title, refreshKey }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-  const fetchVitals = async () => {
-    const res = await api.get(`/vitals?vital_type=${vitalType}`);
+    const fetchVitals = async () => {
+      try {
+        const res = await api.get(`/vitals?vital_type=${vitalType}`);
 
-    const formatted = res.data.vitals.map(v => ({
-      date: v.date,
-      systolic: v.systolic,
-      diastolic: v.diastolic,
-      value: v.value,
-    }));
+        // ✅ backend may return array OR object
+        const vitals = res.data.vitals || res.data || [];
 
-    setData(formatted);
-  };
+        const formatted = vitals.map((v) => {
+          if (vitalType === "BP") {
+            const [systolic, diastolic] = (v.value || "").split("/");
+            return {
+              date: v.date,
+              systolic: Number(systolic),
+              diastolic: Number(diastolic),
+            };
+          }
 
-  fetchVitals();
-}, [refreshKey, vitalType]);
+          return {
+            date: v.date,
+            value: Number(v.value),
+          };
+        });
+
+        setData(formatted);
+      } catch (err) {
+        console.error("Failed to fetch vitals", err);
+        setData([]);
+      }
+    };
+
+    fetchVitals();
+  }, [refreshKey, vitalType]);
 
   if (data.length === 0) {
     return (
@@ -56,8 +73,8 @@ export default function VitalsChart({ vitalType, title, refreshKey }) {
               <XAxis dataKey="date" />
               <YAxis domain={[0, 150]} />
               <Tooltip />
-              <Bar dataKey="systolic" fill="#ef4444" barSize={30} name="Systolic" />
-              <Bar dataKey="diastolic" fill="#3b82f6" barSize={30} name="Diastolic" />
+              <Bar dataKey="systolic" fill="#ef4444" name="Systolic" />
+              <Bar dataKey="diastolic" fill="#3b82f6" name="Diastolic" />
             </BarChart>
           )}
 
@@ -74,7 +91,6 @@ export default function VitalsChart({ vitalType, title, refreshKey }) {
                 stroke="#22c55e"
                 strokeWidth={3}
                 dot={{ r: 5 }}
-                name="Sugar Level"
               />
             </LineChart>
           )}
@@ -91,7 +107,6 @@ export default function VitalsChart({ vitalType, title, refreshKey }) {
                 dataKey="value"
                 stroke="#f97316"
                 fill="#fed7aa"
-                name="Heart Rate"
               />
             </AreaChart>
           )}

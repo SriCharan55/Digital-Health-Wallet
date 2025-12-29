@@ -41,8 +41,17 @@ export default function AddVital({ onAdded }) {
 
     const payload =
       vitalType === "BP"
-        ? { vital_type: "BP", systolic, diastolic, date }
-        : { vital_type: vitalType, value, date };
+        ? {
+          vital_type: "BP",
+          value: `${systolic}/${diastolic}`,
+          date,
+        }
+        : {
+          vital_type: vitalType,
+          value,
+          date,
+        };
+
 
     try {
       await api.post("/vitals", payload);

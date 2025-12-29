@@ -3,8 +3,9 @@ import api from "../services/api";
 
 export default function MyReports({ refreshKey }) {
   const [reports, setReports] = useState([]);
-
   const [selectedReport, setSelectedReport] = useState(null);
+
+  const BACKEND_URL = "https://digital-health-wallet-0rxq.onrender.com";
 
   useEffect(() => {
     fetchReports();
@@ -40,12 +41,11 @@ export default function MyReports({ refreshKey }) {
     }
   };
 
-
   /* =========================
      WhatsApp Share
   ========================= */
   const shareOnWhatsApp = (report) => {
-    const url = `http://localhost:5000/uploads/${report.filename}`;
+    const url = `${BACKEND_URL}/uploads/${report.filename}`;
     const message = `Medical Report (${report.report_type}) - ${url}`;
     window.open(
       `https://wa.me/?text=${encodeURIComponent(message)}`,
@@ -91,11 +91,6 @@ export default function MyReports({ refreshKey }) {
               >
                 WhatsApp
               </button>
-
-
-
-
-
             </div>
           </div>
         ))
@@ -107,21 +102,21 @@ export default function MyReports({ refreshKey }) {
       {selectedReport && (
         <div
           className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
-          onClick={() => setSelectedReport(null)} // click outside closes
+          onClick={() => setSelectedReport(null)}
         >
           <div
             className="
-    bg-white
-    rounded-md
-    shadow-xl
-    max-w-4xl
-    w-full
-    mx-auto
-    max-h-[85vh]
-    overflow-auto
-    p-4
-  "
-            onClick={(e) => e.stopPropagation()} // prevent close on inside click
+              bg-white
+              rounded-md
+              shadow-xl
+              max-w-4xl
+              w-full
+              mx-auto
+              max-h-[85vh]
+              overflow-auto
+              p-4
+            "
+            onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-lg font-semibold mb-4 text-center">
               View Report
@@ -130,20 +125,18 @@ export default function MyReports({ refreshKey }) {
             <div className="flex justify-center">
               {selectedReport.filename.endsWith(".pdf") ? (
                 <iframe
-                  src={`http://localhost:5000/uploads/${selectedReport.filename}`}
+                  src={`${BACKEND_URL}/uploads/${selectedReport.filename}`}
                   className="w-full max-w-4xl h-[75vh] border mx-auto"
                   title="Report Viewer"
                 />
               ) : (
                 <img
-                  src={`http://localhost:5000/uploads/${selectedReport.filename}`}
+                  src={`${BACKEND_URL}/uploads/${selectedReport.filename}`}
                   className="w-full max-w-4xl mx-auto object-contain"
                   alt="Report"
                 />
               )}
             </div>
-
-
 
             <div className="flex justify-center mt-4">
               <button
